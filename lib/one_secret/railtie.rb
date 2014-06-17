@@ -4,4 +4,4 @@ module OneSecret
       require_relative "generators/secrets/secrets_generator"
     end
   end
-end
+end if defined?(Rails)

@@ -1,6 +1,13 @@
 module OneSecret
-  module SecretsYAML
-    def self.set(environment, key, value)
+  class SecretsYAML
+    def initialize(path)
+
+    end
+
+    def set(environment, key, value)
+    end
+
+    def save
     end
   end
 end
