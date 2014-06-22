@@ -10,12 +10,23 @@ module OneSecret
       file.path
     end
     
-    it "keeps comments" do
-      path = temp_file("# Please keep me")
+    it "sets a new value" do
+      path = temp_file """---
 
-      SecretsYAML.new(path).save
+development:
 
-      File.readlines(path).must_equal ["# Please keep me"]
+  foo: bar
+"""
+      secrets = SecretsYAML.new(path)
+      secrets.set("development", "foo", "baz")
+      secrets.save
+
+      File.readlines(path).join("\n").must_equal """---
+
+development:
+
+  foo: baz
+"""
     end
   end
 end
