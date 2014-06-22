@@ -10,23 +10,40 @@ module OneSecret
       file.path
     end
     
-    it "sets a new value" do
+    it "sets new values in the correct environment" do
       path = temp_file """---
 
 development:
 
   foo: bar
+
+test:
+
+  bar: baz
+
+production:
+
+  baz: qux
 """
       secrets = SecretsYAML.new(path)
-      secrets.set("development", "foo", "baz")
+      secrets.set("test", "bar", "barness")
       secrets.save
 
       File.readlines(path).join("\n").must_equal """---
 
 development:
 
-  foo: baz
+  foo: bar
+
+test:
+
+  bar: barness
+
+production:
+
+  baz: qux
 """
+
     end
   end
 end
