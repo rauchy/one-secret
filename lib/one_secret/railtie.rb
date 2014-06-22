@@ -11,13 +11,13 @@ module OneSecret
         Rails.application.secrets[key] = decrypted_value
       end
 
-      # concern 3 - rake tasks for set / get
       # concern 4 - security message for people keeping production secret_key_base in secrets.yml
       # concern 5 - copy all Rails.application.secrets to ENV
     end
 
-    generators do
-      require_relative "generators/secrets/secrets_generator"
+    # concern 3 - rake tasks for set / get
+    rake_tasks do
+      load "one_secret/tasks.rake"
     end
   end
 end if defined?(Rails)
