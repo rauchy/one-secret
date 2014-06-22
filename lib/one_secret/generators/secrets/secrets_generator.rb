@@ -4,8 +4,6 @@ class SecretConfigGenerator < Rails::Generators::Base
   argument :value, type: :string
 
   def secret_config
-    secrets = OneSecret::SecretYAML.new("config/secrets.yml")
-    secrets.set(Rails.env, key, value)
-    secrets.save
+    OneSecret.set(Rails.env, key, value)
   end
 end
