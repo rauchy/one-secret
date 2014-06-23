@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'one_secret/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "one-secret"
+  spec.name          = "one_secret"
   spec.version       = OneSecret::VERSION
   spec.authors       = ["Omer Lachish-Rauchwerger"]
   spec.email         = ["omer@rauchy.net"]
