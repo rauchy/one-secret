@@ -4,9 +4,11 @@ If you're storing your application keys, passwords and other secrets apart
 from your main git repository and you are working in a team, you
 probably know that managing those secrets across the team is a pain in
 the ass.
+
 OneSecret aims to remedy that by encrypting all your secrets
 inside Rails' secrets.yml and decrypting them on the fly so that they are freely
 available to your application.
+
 OneSecret uses Rails' secret_key_base as a key for encrypting your
 secrets, so the only thing you need to set in your production servers is the secret_key_base (you should be doing that even if you don't use OneSecret).
 
@@ -40,8 +42,7 @@ repository.
 
 Inside your app, secrets are decrypted, so you can use them freely:
 
-    Rails.application.secrets.aws_secret_key # =>
-aba41f7bea276da49ef50aa33474fee4
+    Rails.application.secrets.aws_secret_key # => aba41f7bea276da49ef50aa33474fee4
 
 Also, all secrets are copied to ENV, so you can also use this:
 
