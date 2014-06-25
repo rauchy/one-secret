@@ -28,7 +28,7 @@ module OneSecret
       with_iv "I am a random iv" do
         secret = Secret.new("Encrypt me!")
         secret.to_hash.keys.must_include :iv
-        secret.to_hash[:iv].must_be :==, "I am a random iv"
+        secret.to_hash[:iv].must_equal "I am a random iv"
       end
     end
 
@@ -36,7 +36,7 @@ module OneSecret
       with_salt Time.at(0) do
         secret = Secret.new("Encrypt me!")
         secret.to_hash.keys.must_include :salt
-        secret.to_hash[:salt].must_be :==, "0"
+        secret.to_hash[:salt].must_equal "0"
       end
     end
 
