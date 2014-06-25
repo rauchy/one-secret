@@ -6,6 +6,12 @@ module OneSecret
       Encryptor.default_options.merge!(key: "f3bbdba9485ac1ee1412d2c839be0a0f")
     end
 
+    it "encrypts a string" do
+      secret = Secret.new("Encrypt me!")
+      secret.to_hash.keys.must_include :value
+      secret.to_hash[:value].must_be :!=, "Encrypt me!"
+    end
+    
     describe ".load" do
       it "returns the same value when a non-encrypted hash is provided" do
         Secret.load("I am not encrypted").must_equal "I am not encrypted"
