@@ -10,7 +10,8 @@ module OneSecret
       {
         value: @value,
         iv: @iv,
-        salt: @salt
+        salt: @salt,
+        algorithm: Encryptor.default_options[:algorithm]
       }
     end
 

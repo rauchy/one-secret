@@ -40,6 +40,12 @@ module OneSecret
       end
     end
 
+    it "specifies the algorithm being used" do
+      secret = Secret.new("Encrypt me!")
+      secret.to_hash.keys.must_include :algorithm
+      secret.to_hash[:algorithm].must_equal "aes-256-cbc"
+    end
+
     describe ".load" do
       it "returns the same value when a non-encrypted hash is provided" do
         Secret.load("I am not encrypted").must_equal "I am not encrypted"
