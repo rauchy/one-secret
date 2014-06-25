@@ -2,18 +2,30 @@ require './spec/spec_helper'
 
 module OneSecret
   describe Secret do
+    def with_iv(iv)
+      SecureRandom.stub(:hex, iv) { yield }
+    end
+
+    def with_salt(salt)
+      Time.stub(:now, salt) { yield }
+    end
+
     before do
       Encryptor.default_options.merge!(key: "f3bbdba9485ac1ee1412d2c839be0a0f")
     end
 
     it "encrypts a string" do
-      secret = Secret.new("Encrypt me!")
-      secret.to_hash.keys.must_include :value
-      secret.to_hash[:value].must_be :!=, "Encrypt me!"
+      with_iv "I am a random iv" do
+        with_salt Time.at(0) do
+          secret = Secret.new("Encrypt me!")
+          secret.to_hash.keys.must_include :value
+          secret.to_hash[:value].must_be :!=, "Encrypt me!"
+        end
+      end
     end
-    
+
     it "uses a random iv" do
-      SecureRandom.stub :hex, "I am a random iv" do
+      with_iv "I am a random iv" do
         secret = Secret.new("Encrypt me!")
         secret.to_hash.keys.must_include :iv
         secret.to_hash[:iv].must_be :==, "I am a random iv"
@@ -21,7 +33,7 @@ module OneSecret
     end
 
     it "uses now as a salt" do
-      Time.stub :now, Time.at(0) do
+      with_salt Time.at(0) do
         secret = Secret.new("Encrypt me!")
         secret.to_hash.keys.must_include :salt
         secret.to_hash[:salt].must_be :==, "0"
