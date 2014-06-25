@@ -20,6 +20,14 @@ module OneSecret
       end
     end
 
+    it "uses now as a salt" do
+      Time.stub :now, Time.at(0) do
+        secret = Secret.new("Encrypt me!")
+        secret.to_hash.keys.must_include :salt
+        secret.to_hash[:salt].must_be :==, "0"
+      end
+    end
+
     describe ".load" do
       it "returns the same value when a non-encrypted hash is provided" do
         Secret.load("I am not encrypted").must_equal "I am not encrypted"

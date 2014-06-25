@@ -3,12 +3,14 @@ module OneSecret
     def initialize(value)
       @value = value.encrypt
       @iv = SecureRandom.hex(16)
+      @salt = Time.now.to_i.to_s
     end
 
     def to_hash
       {
         value: @value,
-        iv: @iv
+        iv: @iv,
+        salt: @salt
       }
     end
 
