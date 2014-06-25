@@ -7,7 +7,7 @@ module OneSecret
 
       # concern 2 - decrypt Rails.application.secrets
       Rails.application.secrets.each_pair do |key, value|
-        decrypted_value = value.decrypt rescue value
+        decrypted_value = Secret.load(value)
         Rails.application.secrets[key] = decrypted_value
       end
 
