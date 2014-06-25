@@ -12,6 +12,14 @@ module OneSecret
       secret.to_hash[:value].must_be :!=, "Encrypt me!"
     end
     
+    it "uses a random iv" do
+      SecureRandom.stub :hex, "I am a random iv" do
+        secret = Secret.new("Encrypt me!")
+        secret.to_hash.keys.must_include :iv
+        secret.to_hash[:iv].must_be :==, "I am a random iv"
+      end
+    end
+
     describe ".load" do
       it "returns the same value when a non-encrypted hash is provided" do
         Secret.load("I am not encrypted").must_equal "I am not encrypted"
