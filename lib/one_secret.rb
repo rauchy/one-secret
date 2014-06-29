@@ -1,4 +1,5 @@
 require "one_secret/version"
+require "one_secret/key_resolution"
 require "one_secret/secret"
 require "one_secret/secrets_yaml"
 require "encryptor"

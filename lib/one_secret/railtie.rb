@@ -4,6 +4,7 @@ module OneSecret
       # concern 1 - initialize Encryptor with the correct secret_key_base and optional iv and salt
       default_options = {:key => Rails.application.secrets.secret_key_base}
       Encryptor.default_options.merge!(default_options)
+#      Secret.key = KeyResolution.try(:env, :rails, :stdin)
 
       # concern 2 - decrypt Rails.application.secrets
       Rails.application.secrets.each_pair do |key, value|

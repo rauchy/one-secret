@@ -4,7 +4,7 @@ module OneSecret
   module KeyResolution
     def self.try(*strategies)
       strategies.each do |strategy|
-        klass_name = "OneSecret::#{strategy.to_s.capitalize}KeyResolution"
+        klass_name = "OneSecret::KeyResolution::#{strategy.to_s.capitalize}"
         klass = klass_name.constantize
         instance = klass.new
         key = instance.key
