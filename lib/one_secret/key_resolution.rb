@@ -13,5 +13,20 @@ module OneSecret
 
       raise "OneSecret: Cannot resolve key."
     end
+
+    class Env
+      def key
+      end
+    end
+
+    class Rails
+      def key
+      end
+    end
+
+    class Stdin
+      def key
+      end
+    end
   end
 end
