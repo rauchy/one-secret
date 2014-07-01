@@ -39,5 +39,19 @@ module OneSecret
         KeyResolution::Env.new({}).key.must_be_nil
       end
     end
+
+    describe KeyResolution::Rails do
+      it "resolves a key using Rails' application secrets" do
+        ::Rails = double
+        ::Rails.stub_chain(:application, :secrets, :secret_key_base).and_return("hola")
+        KeyResolution::Rails.new.key.must_equal "hola"
+      end
+
+      it "fails to resolve a key otherwise" do
+        ::Rails = double
+        ::Rails.stub_chain(:application, :secrets, :secret_key_base)
+        KeyResolution::Rails.new.key.must_be_nil
+      end
+    end
   end
 end
