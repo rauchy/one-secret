@@ -53,5 +53,19 @@ module OneSecret
         KeyResolution::Rails.new.key.must_be_nil
       end
     end
+
+    describe KeyResolution::Stdin do
+      it "asks the user to type in the secret key" do
+        output = double(print: true, puts: true)
+        input = double(noecho: "hola")
+        KeyResolution::Stdin.new(output, input).key.must_equal "hola"
+      end
+
+      it "fails to resolve a secret key if entered empty" do
+        output = double(print: true, puts: true)
+        input = double(noecho: "")
+        KeyResolution::Stdin.new(output, input).key.must_be_nil
+      end
+    end
   end
 end

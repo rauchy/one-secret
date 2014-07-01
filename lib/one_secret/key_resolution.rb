@@ -31,7 +31,18 @@ module OneSecret
     end
 
     class Stdin
+      require 'io/console'
+
+      def initialize(output = STDOUT, input = STDIN)
+        @output = output
+        @input = input
+      end
+
       def key
+        @output.print "<OneSecret> Please enter your secret key: "
+        key = @input.noecho(&:gets).chomp
+        @output.puts
+        key unless key.blank?
       end
     end
   end
