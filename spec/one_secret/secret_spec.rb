@@ -11,7 +11,7 @@ module OneSecret
     end
 
     before do
-      Encryptor.default_options.merge!(key: "f3bbdba9485ac1ee1412d2c839be0a0f")
+      Secret.key = "f3bbdba9485ac1ee1412d2c839be0a0f"
     end
 
     it "encrypts a string" do

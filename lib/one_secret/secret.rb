@@ -1,5 +1,11 @@
 module OneSecret
   class Secret
+    class << self
+      def key=(key)
+        Encryptor.default_options.merge!({key: key})
+      end
+    end
+
     def initialize(value)
       @iv = SecureRandom.hex(16)
       @salt = Time.now.to_i.to_s
