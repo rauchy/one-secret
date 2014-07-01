@@ -25,5 +25,19 @@ module OneSecret
       KeyResolution::Bar = double(new: double(key: nil))
       -> { KeyResolution.try(:bar) }.must_raise RuntimeError
     end
+
+    describe KeyResolution::Env do
+      it "resolves a key using an environment variable called 'secret_key_base'" do
+        KeyResolution::Env.new({"secret_key_base" => "hola"}).key.must_equal "hola"
+      end
+
+      it "resolves a key using an environment variable called 'SECRET_KEY_BASE'" do
+        KeyResolution::Env.new({"SECRET_KEY_BASE" => "amigo"}).key.must_equal "amigo"
+      end
+
+      it "fails to resolve a key otherwise" do
+        KeyResolution::Env.new({}).key.must_be_nil
+      end
+    end
   end
 end

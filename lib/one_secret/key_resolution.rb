@@ -15,7 +15,12 @@ module OneSecret
     end
 
     class Env
+      def initialize(env = ENV)
+        @env = env
+      end
+
       def key
+        @env["secret_key_base"] || @env["SECRET_KEY_BASE"]
       end
     end
 
