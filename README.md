@@ -60,16 +60,16 @@ Setting and accessing secrets is easy on Development/Test/Staging environments, 
 
 So when setting new secrets for the Production environment, you would have to provide the `secret_key_base` to the `one_secret:set` Rake task. This could be done in one of the following ways:
 
-Type it in:
+Option 1 - Type it in:
   
     $ RAILS_ENV=production rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
     > <OneSecret> Please enter your secret key: <paste your secret here>
 
-Pass it in (important - make sure you prefix your command with an extra space so it doesn't get saved in your shell history):
+Option 2 - Pass it in (important - make sure you prefix your command with an extra space so it doesn't get saved in your shell history):
 
-     RAILS_ENV=production SECRET_KEY_BASE=<your secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+    $  RAILS_ENV=production SECRET_KEY_BASE=<your secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
 
-Encrypt it on your Heroku instance (this will encrypt on your Heroku instance and store the encrypted result on your dev machine):
+Option 3 - Encrypt it on your Heroku instance (this will encrypt on your Heroku instance and store the encrypted result on your dev machine):
   
     $ RAILS_ENV=production rake one_secret:set `heroku run rake one_secret:build aws_secret_key aba41f7bea276da49ef50aa33474fee4`
 
