@@ -18,4 +18,8 @@ module OneSecret
     secret = secrets.values[Rails.env][key]
     Secret.load(secret)
   end
+
+  def self.message(text)
+    "\e[33m<OneSecret>\e[0m #{text}"
+  end
 end

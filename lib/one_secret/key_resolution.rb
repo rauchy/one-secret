@@ -11,7 +11,7 @@ module OneSecret
         return key if key
       end
 
-      raise "OneSecret: Cannot resolve key."
+      raise OneSecret.message("Cannot resolve key.")
     end
 
     class Env
@@ -39,7 +39,7 @@ module OneSecret
       end
 
       def key
-        @output.print "<OneSecret> Please enter your secret key: "
+        @output.print OneSecret.message("Please enter your secret key: ")
         key = @input.noecho(&:gets).chomp
         @output.puts
         key unless key.blank?
