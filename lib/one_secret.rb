@@ -8,9 +8,10 @@ require "one_secret/railtie"
 module OneSecret
   def self.set(environment, key, value)
     secrets = SecretsYAML.new("config/secrets.yml")
-    secret = Secret.new(value)
-    secrets.set(Rails.env, key, secret.to_hash)
-    secrets.save
+    Secret.new(value).tap do |secret|
+      secrets.set(Rails.env, key, secret.to_hash)
+      secrets.save
+    end.to_hash
   end
 
   def self.get(environment, key)
