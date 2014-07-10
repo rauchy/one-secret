@@ -53,6 +53,14 @@ task:
 
     $ rake one_secret:get aws_secret_key
     > aba41f7bea276da49ef50aa33474fee4
+    
+### What About Production?
+
+OneSecret will use the `secret_key_base` as a key for encrypting your secrets. To obtain the `secret_key_base`, OneSecret will search in the following order:
+
+  1. `ENV['secret_key_base']` or `ENV['SECRET_KEY_BASE`] (this should match your production machines and will allow Rails to decrypt the values there.
+  2. Rails.application.secrets.secret_key_base (this will be available on your development and staging environments)
+  3. If it fails finding `secret_key_base` in the previous attempts, it will prompt for it (this will allow you to encrypt production values on your development machines)
 
 ## Contributing
 
