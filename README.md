@@ -62,6 +62,8 @@ OneSecret will use the `secret_key_base` as a key for encrypting your secrets. T
   2. `Rails.application.secrets.secret_key_base` (this will be available on your development and staging environments in your `config/secrets.yml`)
   3. If it fails finding `secret_key_base` in the previous attempts, it will prompt for it (this will allow you to encrypt production values on your development machines)
 
+Bottom line: in development / test / staging - OneSecret will automatically encrypt and decrypt for you. For production - you'll probably want to paste in the `secret_key_base` if you are encrypting on your development box. Decrypting will be done automatically on your production machines.
+
 ## Contributing
 
 1. Fork it ( https://github.com/rauchy/one_secret/fork )
