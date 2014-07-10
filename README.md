@@ -63,7 +63,7 @@ So when setting new secrets for the Production environment, you would have to pr
   * Type it in:
   
     $ RAILS_ENV=production rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
-    > <OneSecret> Please enter your secret key: <<paste your secret here>>
+    > <OneSecret> Please enter your secret key: <paste your secret here>
 
   * Encrypt it in your server (for Heroku - this will encrypt inside your Heroku instance and store the encrypted result on your dev machine):
   
@@ -71,15 +71,7 @@ So when setting new secrets for the Production environment, you would have to pr
 
   * Pass it in (not recommended since your `secret_key_base` will be available in your shell history):
 
-    RAILS_ENV=production SECRET_KEY_BASE=<<your secret>> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
-
-OneSecret will use the `secret_key_base` as a key for encrypting your secrets. To obtain the `secret_key_base`, OneSecret will search in the following order:
-
-  1. `ENV['secret_key_base']` or `ENV['SECRET_KEY_BASE']` (this should be found on your production machines and will allow Rails to decrypt the values there.
-  2. `Rails.application.secrets.secret_key_base` (this will be available on your development and staging environments in your `config/secrets.yml`)
-  3. If it fails finding `secret_key_base` in the previous attempts, it will prompt for it (this will allow you to encrypt production values on your development machines)
-
-Bottom line: in development / test / staging - OneSecret will automatically encrypt and decrypt for you. For production - you'll probably want to paste in the `secret_key_base` if you are encrypting on your development box. Decrypting will be done automatically on your production machines.
+    RAILS_ENV=production SECRET_KEY_BASE=<your secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
 
 ## Contributing
 
