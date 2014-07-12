@@ -60,18 +60,26 @@ Setting and accessing secrets is easy on Development/Test/Staging environments, 
 
 So when setting new secrets for the Production environment, you would have to provide the `secret_key_base` to the `one_secret:set` Rake task. This could be done in one of the following ways:
 
-Option 1 - Type it in:
-  
-    $ RAILS_ENV=production rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
-    > <OneSecret> Please enter your secret key: <paste your secret here>
+#### Encrypt Remotely (Heroku)
 
-Option 2 - Pass it in (important - make sure you prefix your command with an extra space so it doesn't get saved in your shell history):
-
-    $  RAILS_ENV=production SECRET_KEY_BASE=<your secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
-
-Option 3 - Encrypt it on your Heroku instance (this will encrypt on your Heroku instance and store the encrypted result on your dev machine):
+This will encrypt the secret on your Heroku instance and store the encrypted result on your dev machine.
+This is the most secure way of encrypting production values, since your production `secret_key_base` never leaves your production environment.
   
     $ RAILS_ENV=production rake one_secret:set `heroku run rake one_secret:build aws_secret_key aba41f7bea276da49ef50aa33474fee4`
+
+#### Pass secret_key_base In
+
+If you can't encrypt production values remotely, you can pass your production `secret_key_base` to Rake.
+Important - make sure you prefix your command with an extra space so it doesn't get saved in your shell history.
+
+    $  RAILS_ENV=production SECRET_KEY_BASE=<your production secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+
+#### Type secret_key_base In
+
+If your environment doesn't have a `secret_key_base`, OneSecret will simply prompt for it.
+
+    $ RAILS_ENV=production rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+    > <OneSecret> Please enter your secret key: <paste your production secret here>
 
 Accessing secrets is the same for production, as your production machines would typically have `ENV['secret_key_base']` present.
 
