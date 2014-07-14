@@ -62,7 +62,7 @@ Since the Production `secret_key_base` is only available in your Production serv
 
 If your app is on Heroku, you can wire `heroku config:get`:
 
-    $ RAILS_ENV=production SECRET_KEY_BASE=`heroku config:get SECRET_KEY_BASE` rake one_secret:set aws_secret_key 
+    $ RAILS_ENV=production SECRET_KEY_BASE=`heroku config:get SECRET_KEY_BASE` rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
 
 If you're not on Heroku, you can pass your Production `secret_key_base` to Rake:
 
