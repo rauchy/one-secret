@@ -30,7 +30,7 @@ Or install it yourself as:
 
 ### Setting a new secret
 
-To add a new secret, simply call the `one_secret:set` task:
+To set a new secret, simply call the `one_secret:set` task:
 
     $ rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
 
@@ -40,11 +40,11 @@ repository.
 
 ### Accessing secrets
 
-Inside your app, secrets are decrypted, so you can use them freely:
+Inside your app, secrets are decrypted automatically, so you can use them freely:
 
     Rails.application.secrets.aws_secret_key # => aba41f7bea276da49ef50aa33474fee4
 
-Also, all secrets are copied to ENV, so you can also use this:
+Also, all secrets are copied to `ENV`, so you can also use this:
 
     ENV['aws_secret_key'] # => aba41f7bea276da49ef50aa33474fee4
 
@@ -54,13 +54,11 @@ task:
     $ rake one_secret:get aws_secret_key
     > aba41f7bea276da49ef50aa33474fee4
     
-### What About Production?
+### Setting secrets for the Production environment
 
-Setting and accessing secrets is easy on Development/Test/Staging environments, where your `secret_key_base` is available inside `config/secrets.yml`. However, on Production, usage is slightly different for setting secrets, since your Production's `secret_key_base` should *never* be commited to git.
+Since the Production `secret_key_base` is only available in your Production servers, you should provide the `secret_key_base` to the `one_secret:set` Rake task when setting Production secrets. This could be done in one of the following ways:
 
-So when setting new secrets for the Production environment, you should provide the `secret_key_base` to the `one_secret:set` Rake task. This could be done in one of the following ways:
-
-#### Pass secret_key_base In
+#### Pass `secret_key_base` In
 
 If your app is on Heroku, you can wire `heroku config:get`:
 
@@ -72,7 +70,7 @@ If you're not on Heroku, you can pass your Production `secret_key_base` to Rake:
     
 *Important* - make sure you prefix your command with an extra space so it doesn't get saved in your shell history.
 
-#### Type secret_key_base In
+#### Type `secret_key_base` In
 
 If your running environment doesn't have a `secret_key_base`, OneSecret will simply prompt for it.
 
