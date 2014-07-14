@@ -6,11 +6,11 @@ probably know that managing those secrets across the team is a pain in
 the ass.
 
 OneSecret aims to remedy that by encrypting all your secrets
-inside Rails' secrets.yml and decrypting them on the fly so that they are freely
-available to your application.
+inside Rails' `config/secrets.yml` and decrypting them on the fly so that they are freely
+available in your application.
 
 OneSecret uses Rails' `secret_key_base` as a key for encrypting your
-secrets, so the only thing you need to set in your Production servers is the `secret_key_base` (you should be doing that even if you don't use OneSecret).
+secrets, so the only thing you need to set in your Production servers is the `secret_key_base` (you should be doing this even if you don't use OneSecret).
 
 ## Installation
 
@@ -22,21 +22,17 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install one_secret
-
 ## Usage
 
 ### Setting a new secret
 
-To set a new secret, simply call the `one_secret:set` task:
+To set a new secret, simply call the `one_secret:set` task with a key and value to encrypt:
 
     $ rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
 
 That's it! This will encrypt the value and keep it inside
-`config/secrets.yml`. Feel free to commit that file to your git
-repository.
+`config/secrets.yml`. **Feel free to commit this file to your git
+repository.**
 
 ### Accessing secrets
 
@@ -60,11 +56,11 @@ Since the Production `secret_key_base` is only available in your Production serv
 
 #### Pass `secret_key_base` In
 
-If your app is on Heroku, you can wire `heroku config:get`:
+If your app is hosted on Heroku, you can wire `heroku config:get`:
 
     $ RAILS_ENV=production SECRET_KEY_BASE=`heroku config:get SECRET_KEY_BASE` rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
 
-If you're not on Heroku, you can pass your Production `secret_key_base` to Rake:
+If you're not hosted on Heroku, you can pass your Production `secret_key_base` to Rake:
 
     $  RAILS_ENV=production SECRET_KEY_BASE=<your production secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
     
