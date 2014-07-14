@@ -68,7 +68,7 @@ If you're not on Heroku, you can pass your Production `secret_key_base` to Rake:
 
     $  RAILS_ENV=production SECRET_KEY_BASE=<your production secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
     
-*Important* - make sure you prefix your command with an extra space so it doesn't get saved in your shell history.
+**Important** - note that there is an extra space at the beginning of this command. Make sure you prefix your command with that extra space so it doesn't get saved in your shell history.
 
 #### Type `secret_key_base` In
 
