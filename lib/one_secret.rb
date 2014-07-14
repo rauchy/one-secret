@@ -6,12 +6,16 @@ require "encryptor"
 require "one_secret/railtie"
 
 module OneSecret
+  def self.build(value)
+    Secret.new(value)
+  end
+
   def self.set(environment, key, value)
     secrets = SecretsYAML.new("config/secrets.yml")
-    Secret.new(value).tap do |secret|
+    build(value).tap do |secret|
       secrets.set(Rails.env, key, secret.to_hash)
       secrets.save
-    end.to_hash
+    end
   end
 
   def self.get(environment, key)
