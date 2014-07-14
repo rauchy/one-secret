@@ -6,8 +6,6 @@ module OneSecret
       Rails.application.secrets.each_pair do |key, value|
         Rails.application.secrets[key] = ENV[key.to_s] = Secret.load(value)
       end
-
-      # concern 4 - security message for people keeping production secret_key_base in secrets.yml
     end
 
     rake_tasks do
