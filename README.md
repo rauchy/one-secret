@@ -16,11 +16,15 @@ secrets, so the only thing you need to set in your Production servers is the `se
 
 Add this line to your application's Gemfile:
 
-    gem 'one_secret'
+```ruby
+gem 'one_secret'
+```
 
 And then execute:
 
-    $ bundle
+```sh
+$ bundle
+```
 
 ## Usage
 
@@ -28,7 +32,9 @@ And then execute:
 
 To set a new secret, simply call the `one_secret:set` task with a key and value to encrypt:
 
-    $ rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+```sh
+rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+```
 
 That's it! This will encrypt the value and keep it inside
 `config/secrets.yml`. **Feel free to commit this file to your git
@@ -44,14 +50,18 @@ Rails.application.secrets.aws_secret_key # => aba41f7bea276da49ef50aa33474fee4
 
 Also, all secrets are copied to `ENV`, so you can also use this:
 
-    ENV['aws_secret_key'] # => aba41f7bea276da49ef50aa33474fee4
+```ruby
+ENV['aws_secret_key'] # => aba41f7bea276da49ef50aa33474fee4
+```
 
 If you want to access secrets outside Rails, use the `one_secret:get`
 task:
 
-    $ rake one_secret:get aws_secret_key
-    > aba41f7bea276da49ef50aa33474fee4
-    
+```sh
+rake one_secret:get aws_secret_key
+> aba41f7bea276da49ef50aa33474fee4
+```
+
 ### Setting secrets for the Production environment
 
 Since the Production `secret_key_base` is only available in your Production servers, you should provide the `secret_key_base` to the `one_secret:set` Rake task when setting Production secrets. This could be done in one of the following ways:
@@ -60,11 +70,15 @@ Since the Production `secret_key_base` is only available in your Production serv
 
 If your app is hosted on Heroku, you can wire `heroku config:get`:
 
-    $ RAILS_ENV=production SECRET_KEY_BASE=`heroku config:get SECRET_KEY_BASE` rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+```sh
+$ RAILS_ENV=production SECRET_KEY_BASE=`heroku config:get SECRET_KEY_BASE` rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+```
 
 If you're not hosted on Heroku, you can pass your Production `secret_key_base` to Rake:
 
-    $  RAILS_ENV=production SECRET_KEY_BASE=<your production secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+```sh
+RAILS_ENV=production SECRET_KEY_BASE=<your production secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+```
     
 **Important** - note that there is an extra space at the beginning of this command. Make sure you prefix your command with that extra space so it doesn't get saved in your shell history.
 
@@ -72,8 +86,10 @@ If you're not hosted on Heroku, you can pass your Production `secret_key_base` t
 
 If your running environment doesn't have a `secret_key_base`, OneSecret will simply prompt for it.
 
-    $ RAILS_ENV=production rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
-    > <OneSecret> Please enter your secret key: <paste your production secret here>
+```sh
+$ RAILS_ENV=production rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+> <OneSecret> Please enter your secret key: <paste your production secret here>
+```
 
 Accessing secrets is the same for Production, as your Production machines would typically have `ENV['secret_key_base']` present.
 
