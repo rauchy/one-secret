@@ -38,7 +38,9 @@ repository.**
 
 Inside your app, secrets are decrypted automatically, so you can use them freely:
 
-    Rails.application.secrets.aws_secret_key # => aba41f7bea276da49ef50aa33474fee4
+```ruby
+Rails.application.secrets.aws_secret_key # => aba41f7bea276da49ef50aa33474fee4
+```
 
 Also, all secrets are copied to `ENV`, so you can also use this:
 
