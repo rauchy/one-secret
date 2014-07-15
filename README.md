@@ -1,6 +1,4 @@
-# OneSecret
-
-[![Build Status](https://travis-ci.org/rauchy/one-secret.svg)](https://travis-ci.org/rauchy/one-secret)
+# OneSecret [![Build Status](https://travis-ci.org/rauchy/one-secret.svg)](https://travis-ci.org/rauchy/one-secret)
 
 If you're storing your application keys, passwords and other secrets apart
 from your main git repository and you are working in a team, you
