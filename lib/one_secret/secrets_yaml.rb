@@ -1,5 +1,4 @@
 require 'yaml'
-require 'erb'
 
 module OneSecret
   class SecretsYAML
