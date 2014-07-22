@@ -11,7 +11,7 @@ module OneSecret
   end
 
   def self.set(environment, key, value)
-    secrets = SecretsYAML.new("config/secrets.yml")
+    secrets = SecretsYAML.new(Rails.application.paths["config/secrets"].first)
     build(value).tap do |secret|
       secrets.set(environment, key, secret.to_hash)
       secrets.save
@@ -19,7 +19,7 @@ module OneSecret
   end
 
   def self.get(environment, key)
-    secrets = SecretsYAML.new("config/secrets.yml")
+    secrets = SecretsYAML.new(Rails.application.paths["config/secrets"].first)
     secret = secrets.values[environment][key]
     Secret.load(secret)
   end
