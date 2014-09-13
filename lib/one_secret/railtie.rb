@@ -5,7 +5,9 @@ module OneSecret
         Secret.key = KeyResolution.try(:env, :rails, :stdin)
 
         Rails.application.secrets.each_pair do |key, value|
-          Rails.application.secrets[key] = ENV[key.to_s] = Secret.load(value)
+          decrypted_secret = Secret.load(value)
+          Rails.application.secrets[key] = decrypted_secret
+          ENV[key.to_s] = decrypted_secret if OneSecret.configuration.decrypt_into_env?
         end
       end
     end

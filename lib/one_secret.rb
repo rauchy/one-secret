@@ -2,10 +2,19 @@ require "one_secret/version"
 require "one_secret/key_resolution"
 require "one_secret/secret"
 require "one_secret/secrets_yaml"
+require "one_secret/configuration"
 require "encryptor"
 require "one_secret/railtie"
 
 module OneSecret
+  def self.configure(&block)
+    configuration.instance_eval(&block)
+  end
+
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
+
   def self.build(value)
     Secret.new(value)
   end

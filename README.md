@@ -46,19 +46,31 @@ repository.**
 
 ### Accessing secrets
 
-Inside your app, secrets are decrypted automatically, so you can use them freely:
+There are 3 ways to access your secrets:
+
+1. Inside your app, secrets are decrypted automatically, so you can use them freely:
 
 ```ruby
 Rails.application.secrets.aws_secret_key # => aba41f7bea276da49ef50aa33474fee4
 ```
 
-Also, all secrets are copied to `ENV`, so you can also use this:
+2. If you wish to, you can access all secrets through `ENV`:
 
 ```ruby
 ENV['aws_secret_key'] # => aba41f7bea276da49ef50aa33474fee4
 ```
 
-If you want to access secrets outside Rails, use the `one_secret:get`
+To enable access through `ENV`, add this configuration block to
+`application.rb`:
+
+```ruby
+# application.rb
+OneSecret.configure do
+  decrypt_into_env!
+end
+```
+
+3. If you want to access secrets outside Rails, use the `one_secret:get`
 task:
 
 ```sh
@@ -82,6 +94,8 @@ Since the Production `secret_key_base` is only available in your Production serv
 #### Pass `secret_key_base` In
 
 If your app is hosted on Heroku, you can wire `heroku config:get`:
+:a
+
 
 ```sh
 $ RAILS_ENV=production SECRET_KEY_BASE=`heroku config:get SECRET_KEY_BASE` rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
@@ -90,7 +104,7 @@ $ RAILS_ENV=production SECRET_KEY_BASE=`heroku config:get SECRET_KEY_BASE` rake 
 If you're not hosted on Heroku, you can pass your Production `secret_key_base` to Rake:
 
 ```sh
-RAILS_ENV=production SECRET_KEY_BASE=<your production secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
+ RAILS_ENV=production SECRET_KEY_BASE=<your production secret> rake one_secret:set aws_secret_key aba41f7bea276da49ef50aa33474fee4
 ```
     
 **Important** - note that there is an extra space at the beginning of this command. Make sure you prefix your command with that extra space so it doesn't get saved in your shell history.
