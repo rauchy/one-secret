@@ -1,6 +1,12 @@
 module OneSecret
   class Secret
     class << self
+      def unlocked
+        self.key = KeyResolution.try(:env, :rails, :stdin)
+        yield
+        self.key = nil
+      end
+
       def key=(key)
         Encryptor.default_options.merge!({key: key})
       end

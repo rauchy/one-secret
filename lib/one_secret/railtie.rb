@@ -2,12 +2,10 @@ module OneSecret
   class Railtie < Rails::Railtie
     config.before_initialize do
       if should_run?
-        Secret.key = KeyResolution.try(:env, :rails, :stdin)
-
-        Rails.application.secrets.each_pair do |key, value|
-          decrypted_secret = Secret.load(value)
-          Rails.application.secrets[key] = decrypted_secret
-          ENV[key.to_s] = decrypted_secret if OneSecret.configuration.decrypt_into_env?
+        Secret.unlocked do
+          each_secret do |name, secret|
+            put_in_stores(name, secret)
+          end
         end
       end
     end
@@ -18,11 +16,22 @@ module OneSecret
 
     private
 
-    def self.should_run?
-      if defined?(Rake)
-        !Rake.application.top_level_tasks.include?("assets:precompile")
-      else
-        true
+    class << self
+
+      def each_secret(&block)
+        Rails.application.secrets.each_pair(&block)
+      end
+
+      def put_in_stores(name, secret)
+        [ApplicationSecretsStore, EnvStore].each { |s| s.new.put(name, secret) }
+      end
+
+      def should_run?
+        if defined?(Rake)
+          !Rake.application.top_level_tasks.include?("assets:precompile")
+        else
+          true
+        end
       end
     end
   end
