@@ -17,7 +17,9 @@ module OneSecret
   end
 
   def self.build(value)
-    Secret.new(value)
+    Secret.unlocked {
+      return Secret.new(value)
+    }
   end
 
   def self.set(environment, key, value)
@@ -31,7 +33,10 @@ module OneSecret
   def self.get(environment, key)
     secrets = SecretsYAML.new(Rails.application.paths["config/secrets"].first)
     secret = secrets.values[environment][key]
-    Secret.load(secret)
+
+    Secret.unlocked {
+      return Secret.load(secret)
+    }
   end
 
   def self.message(text)
