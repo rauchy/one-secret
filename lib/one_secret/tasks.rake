@@ -23,6 +23,11 @@ namespace :one_secret do
     disable_tasks(key)
   end
 
+  desc "Decrypts and gets all secrets from the current environment in config/secrets.yml"
+  task :get_all => :environment do
+    puts OneSecret.get_all(Rails.env)
+  end
+
   def disable_tasks(*tasks)
     tasks.each do |task_name|
       task task_name.to_sym do ; end

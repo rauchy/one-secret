@@ -39,6 +39,13 @@ module OneSecret
     }
   end
 
+  def self.get_all(environment)
+    secrets = SecretsYAML.new(Rails.application.paths["config/secrets"].first)
+    Secret.unlocked {
+      return Hash[secrets.values[environment].map { |k, v| [k, Secret.load(v)] }]
+    }
+  end
+
   def self.message(text)
     "\e[33m<OneSecret>\e[0m #{text}"
   end
